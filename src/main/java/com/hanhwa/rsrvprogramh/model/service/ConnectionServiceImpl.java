@@ -2,10 +2,12 @@ package com.hanhwa.rsrvprogramh.model.service;
 
 import com.hanhwa.rsrvprogramh.model.dto.RsrvRequest;
 import com.hanhwa.rsrvprogramh.model.dto.RsrvResponse;
-import com.local.rsrvprogramlocal.model.dto.RsrvRequest;
-import com.local.rsrvprogramlocal.model.dto.RsrvResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConnectionServiceImpl implements ConnectionService {
+    @Autowired
     private final RsrvService rsrvService;
 
     public ConnectionServiceImpl(RsrvService rsrvService) {
