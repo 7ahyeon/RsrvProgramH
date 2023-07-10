@@ -1,4 +1,4 @@
-package com.hanhwa.rsrvprogramh.model.service;
+package com.hanhwa.rsrvprogramh.service;
 
 import com.google.gson.JsonObject;
 

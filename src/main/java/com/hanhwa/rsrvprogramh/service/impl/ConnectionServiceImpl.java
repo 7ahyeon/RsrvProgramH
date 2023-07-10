@@ -1,8 +1,10 @@
-package com.hanhwa.rsrvprogramh.model.service;
+package com.hanhwa.rsrvprogramh.service.impl;
 
 import com.google.gson.JsonObject;
-import com.hanhwa.rsrvprogramh.model.dto.RsrvRequest;
-import com.hanhwa.rsrvprogramh.model.dto.RsrvResponse;
+import com.hanhwa.rsrvprogramh.model.RsrvRequest;
+import com.hanhwa.rsrvprogramh.model.RsrvResponse;
+import com.hanhwa.rsrvprogramh.service.ConnectionService;
+import com.hanhwa.rsrvprogramh.service.RsrvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

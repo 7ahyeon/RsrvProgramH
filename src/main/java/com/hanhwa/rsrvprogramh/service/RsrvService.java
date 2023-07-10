@@ -1,7 +1,7 @@
-package com.hanhwa.rsrvprogramh.model.service;
+package com.hanhwa.rsrvprogramh.service;
 
 import com.google.gson.JsonObject;
-import com.hanhwa.rsrvprogramh.model.dto.RsrvResponse;
+import com.hanhwa.rsrvprogramh.model.RsrvResponse;
 
 public interface RsrvService {
     // 예약 신청 응답 JSON 파일 읽기

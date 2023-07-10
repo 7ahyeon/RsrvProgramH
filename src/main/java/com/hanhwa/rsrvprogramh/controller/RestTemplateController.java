@@ -1,10 +1,9 @@
 package com.hanhwa.rsrvprogramh.controller;
 
 import com.google.gson.JsonObject;
-import com.hanhwa.rsrvprogramh.model.service.ConnectionService;
+import com.hanhwa.rsrvprogramh.service.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;

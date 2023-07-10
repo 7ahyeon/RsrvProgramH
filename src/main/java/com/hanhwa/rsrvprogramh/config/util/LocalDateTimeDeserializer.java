@@ -1,4 +1,4 @@
-package com.hanhwa.rsrvprogramh.model.service.util;
+package com.hanhwa.rsrvprogramh.config.util;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
