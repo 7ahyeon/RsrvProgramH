@@ -2,6 +2,8 @@ package com.hanhwa.rsrvprogramh.model.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hanhwa.rsrvprogramh.exception.CloseException;
+import com.hanhwa.rsrvprogramh.exception.FileNotReadException;
 import com.hanhwa.rsrvprogramh.model.dto.RsrvRequest;
 import com.hanhwa.rsrvprogramh.model.dto.RsrvResponse;
 import com.hanhwa.rsrvprogramh.model.service.util.LocalDateDeserializer;
@@ -9,69 +11,55 @@ import com.hanhwa.rsrvprogramh.model.service.util.LocalDateSerializer;
 import com.hanhwa.rsrvprogramh.model.service.util.LocalDateTimeDeserializer;
 import com.hanhwa.rsrvprogramh.model.service.util.LocalDateTimeSerializer;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 
 @Service
 public class RsrvServiceImpl implements RsrvService {
-
     @Override
     public String getResponseFile() { // 예약 신청 응답 JSON 파일 읽기
-        URL resource = getClass().getClassLoader().getResource("static/file/RsrvReqRs.json");
+        String fileName = "RsrvReqRs.json";
+        URL resource = getClass().getClassLoader().getResource("static/file/" + fileName);
         String jsonFilePath = resource.getFile();
-        File file = new File(jsonFilePath);
-        FileInputStream fis = null;
-        InputStreamReader isr = null;
+
+        FileReader fr = null;
         BufferedReader br = null;
-        String jsonFileContentLine;
+
         try {
-            fis = new FileInputStream(file);
-            isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-            br = new BufferedReader(isr);
-            // StringBuilder : 문자열 연산이 많을 경우, 동기화를 고려하지 않기 때문에 단일 스레드 환경일 경우(StringBuffer보다 성능 뛰어남) 사용
-            StringBuilder sb = new StringBuilder();
+            fr = new FileReader(jsonFilePath);
+            br = new BufferedReader(fr);
+
+            String jsonFileContentLine;
+            // StringBuilder : 동기화 비지원 (싱글 스레드 환경 적합)
+            // StringBuffer : 동기화 지원 (멀티 스레드 환경 적합)
+            StringBuffer sb = new StringBuffer();
 
             while((jsonFileContentLine = br.readLine()) != null){ // 빈 문자열이 없도록 주의(NPE)
                 sb.append(jsonFileContentLine);
             }
-            System.out.println(sb.toString());
             return sb.toString();
-        }catch (FileNotFoundException e) {
-            return "FileNotFoundException";
-            // 파일을 읽지 못했을 경우
+            // 체크 예외
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // 파일을 읽지 못했을 때
+            throw new FileNotReadException(e);
         } finally {
+            if (fr != null) {
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    throw new CloseException("FileReader is not closed.", e);
+                }
+            }
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (isr != null) {
-                try {
-                    isr.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new CloseException("BufferedReader is not closed.", e);
                 }
             }
         }

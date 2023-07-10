@@ -24,7 +24,6 @@ public class RestTemplateController {
         this.restTemplate = restTemplate;
         this.connectionService = connectionService;
     }
-
     @PostMapping("/rsrvResponse")
     public HttpEntity<String> rsrvResponse() {
         // Header 생성

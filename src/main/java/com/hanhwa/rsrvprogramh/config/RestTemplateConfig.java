@@ -12,7 +12,12 @@ import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfig {
+    /* @Configuration @Bean
+       스프링 컨테이너가 @Configuration이 붙은 클래스를 자동 빈 등록 후 해당 클래스를 파싱해서 @Bean이 있는 메소드를 찾아서 빈 생성해줌
+       싱글톤 빈으로 등록해서 1개의 객체만 생성하여 여러 클래스가 공유함으로써 메모리 상의 이점을 얻음
+    */
 
+    // Spring Bean : Spring의 DI 컨테이너에 의해 관리되는 POJO(Spring 애플리케이션을 구성하는 핵심 객체)
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder
