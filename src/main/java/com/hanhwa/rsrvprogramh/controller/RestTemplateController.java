@@ -1,5 +1,6 @@
 package com.hanhwa.rsrvprogramh.controller;
 
+import com.google.gson.JsonObject;
 import com.hanhwa.rsrvprogramh.model.service.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -25,18 +26,18 @@ public class RestTemplateController {
         this.connectionService = connectionService;
     }
     @PostMapping("/rsrvResponse")
-    public HttpEntity<String> rsrvResponse() {
+    public HttpEntity<JsonObject> rsrvResponse() {
         // Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-type", "application/json");
 
         // Body 생성
-        String responseJson = connectionService.createResponse();
+        JsonObject responseJson = connectionService.createResponse();
 
         // HttpEntity 생성
         // HttpEntity<T> : HTTP 요청/응답에 해당하는 HttpHeader와 HttpBody를 포함하는 클래스
         // RequestEntity / ResponseEntity : HttpEntity 클래스를 상속받아 구현한 클래스
-        HttpEntity<String> response = new HttpEntity<>(responseJson, headers);
+        HttpEntity<JsonObject> response = new HttpEntity<>(responseJson, headers);
 
         return response;
     }

@@ -2,6 +2,7 @@ package com.hanhwa.rsrvprogramh.model.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.hanhwa.rsrvprogramh.exception.CloseException;
 import com.hanhwa.rsrvprogramh.exception.FileNotReadException;
 import com.hanhwa.rsrvprogramh.model.dto.RsrvRequest;
@@ -92,13 +93,14 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public String parsingJson(RsrvResponse rsrvResponse) { // 요청 JSON 전문 생성
+    public JsonObject parsingJson(RsrvResponse rsrvResponse) { // 요청 JSON 전문 생성
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         Gson gson = gsonBuilder.serializeNulls().setPrettyPrinting().create();
 
         String jsonContent = gson.toJson(rsrvResponse);
-        return jsonContent;
+        JsonObject requestJson = gson.fromJson(jsonContent, JsonObject.class);
+        return requestJson;
     }
 }

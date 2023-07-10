@@ -4,6 +4,8 @@ server:
 
 spring:
   mvc:
+    converters:
+      preferred-json-mapper: gson
     pathmatch:
       matching-strategy: ant_path_matcher
     view:
