@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hanhwa.rsrvprogramh.config.exception.CloseException;
 import com.hanhwa.rsrvprogramh.config.exception.FileNotReadException;
-import com.hanhwa.rsrvprogramh.model.RsrvRequest;
-import com.hanhwa.rsrvprogramh.model.RsrvResponse;
+import com.hanhwa.rsrvprogramh.model.ReserveRequest;
+import com.hanhwa.rsrvprogramh.model.ReserveResponse;
 import com.hanhwa.rsrvprogramh.service.RsrvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,12 +72,12 @@ public class RsrvServiceImpl implements RsrvService {
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
             System.out.println("call");
-            RsrvRequest rsrvRequest = gson.fromJson(jsonFileContent, RsrvRequest.class);
-            return rsrvRequest;
+            ReserveRequest reserveRequest = gson.fromJson(jsonFileContent, ReserveRequest.class);
+            return reserveRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {
             // 응답
-            RsrvResponse rsrvResponse = gson.fromJson(jsonFileContent, RsrvResponse.class);
-            return rsrvResponse;
+            ReserveResponse reserveResponse = gson.fromJson(jsonFileContent, ReserveResponse.class);
+            return reserveResponse;
         } else {
             // 예외 처리 패턴 getOrElse : 예외 대신 기본 값을 리턴함(null이 아닌 기본 값)
             return Collections.emptyList();
@@ -85,8 +85,8 @@ public class RsrvServiceImpl implements RsrvService {
     }
 
     @Override
-    public JsonObject parsingJson(RsrvResponse rsrvResponse) { // 요청 JSON 전문 생성
-        String jsonContent = gson.toJson(rsrvResponse);
+    public JsonObject parsingJson(ReserveResponse reserveResponse) { // 요청 JSON 전문 생성
+        String jsonContent = gson.toJson(reserveResponse);
         JsonObject requestJson = gson.fromJson(jsonContent, JsonObject.class);
         return requestJson;
     }

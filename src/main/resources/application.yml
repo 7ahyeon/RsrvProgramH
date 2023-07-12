@@ -3,11 +3,16 @@ server:
   port: 8002
 
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/hanhwa?serverTimezone=UTC&characterEncoding=UTF-8
+    username: hanhwamanager
+    password: hanhwa1234
   mvc:
     converters:
       preferred-json-mapper: gson
-    pathmatch:
-      matching-strategy: ant_path_matcher
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp
+    pathmatch:
+      matching-strategy: ant_path_matcher
