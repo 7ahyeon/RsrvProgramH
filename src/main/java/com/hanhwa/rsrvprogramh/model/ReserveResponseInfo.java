@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @ToString
 @Getter
 @Setter
 @NoArgsConstructor
 public class ReserveResponseInfo {
-    // 처리 일시
+/*    // 처리 일시
     @SerializedName("PROC_DS")
     private LocalDateTime procDs;
     // 처리 코드
@@ -25,11 +25,13 @@ public class ReserveResponseInfo {
     // 회원 번호
     @SerializedName("MEMB_NO")
     private String membNo;
-    // 예약 번호
-    @SerializedName("RSRV_NO")
-    private long rsrvNo;
     // 객실료
     @SerializedName("ROOM_RATE")
-    private String roomRate;
-    // 객장 코드
+    private String roomRate;*/
+    // 예약 번호
+    @SerializedName("RSRV_NO")
+    private String rsrvNo;
+    private transient LocalDate rsrvCmplDate;
+    private transient String rsrvCmplSt;
+    private transient Long roomReserveId;
 }

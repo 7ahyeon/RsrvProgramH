@@ -21,23 +21,25 @@ public class ConnectionServiceImpl implements ConnectionService {
         this.rsrvService = rsrvService;
     }
     @Override
-    public HttpEntity<JsonObject> httpConnection() {
+    public HttpEntity<JsonObject> httpConnection(JsonObject request) {
+        ReserveRequest reserveRequest = handleRequest(request);
         // Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("content-type", "application/json");
 
         // Body 생성
-        JsonObject responseJson = createResponse();
+        JsonObject responseJson = createResponse(reserveRequest);
 
         // HttpEntity 생성
         // HttpEntity<T> : HTTP 요청/응답에 해당하는 HttpHeader와 HttpBody를 포함하는 클래스
         // RequestEntity / ResponseEntity : HttpEntity 클래스를 상속받아 구현한 클래스
         HttpEntity<JsonObject> response = new HttpEntity<>(responseJson, headers);
-
         return response;
     }
     @Override
-    public JsonObject createResponse() {
+    public JsonObject createResponse(ReserveRequest reserveRequest) {
+        // 응답 Json 전문 Object 바인딩
+        rsrvService.completeResponse(reserveRequest);
         // 응답 파일 읽기
         String jsonFileContent = rsrvService.getResponseFile();
         // 응답 Json 전문 Object 바인딩
@@ -49,9 +51,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
-    public String handleRequest(String responseJsonContent) {
+    public ReserveRequest handleRequest(JsonObject request) {
         // 요청 Json 전문 Object 바인딩
-        ReserveRequest reserveRequest = (ReserveRequest) rsrvService.bindingObject(responseJsonContent);
-        return reserveRequest.toString();
+        ReserveRequest reserveRequest = (ReserveRequest) rsrvService.bindingObject(request.toString());
+        return reserveRequest;
     }
 }

@@ -4,13 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hanhwa.rsrvprogramh.config.exception.CloseException;
 import com.hanhwa.rsrvprogramh.config.exception.FileNotReadException;
+import com.hanhwa.rsrvprogramh.dao.ReserveRepository;
 import com.hanhwa.rsrvprogramh.model.ReserveRequest;
 import com.hanhwa.rsrvprogramh.model.ReserveResponse;
 import com.hanhwa.rsrvprogramh.service.RsrvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
@@ -18,11 +21,13 @@ import java.util.Collections;
 public class RsrvServiceImpl implements RsrvService {
     @Autowired
     private final Gson gson;
+    @Autowired
+    private final ReserveRepository reserveRepository;
 
-    public RsrvServiceImpl(Gson gson) {
+    public RsrvServiceImpl(Gson gson, ReserveRepository reserveRepository) {
         this.gson = gson;
+        this.reserveRepository = reserveRepository;
     }
-
     @Override
     public String getResponseFile() { // 예약 신청 응답 JSON 파일 읽기
         String fileName = "RsrvReqRs.json";
@@ -65,6 +70,10 @@ public class RsrvServiceImpl implements RsrvService {
                 }
             }
         }
+    }
+    @Override
+    public Long completeResponse(ReserveRequest reserveRequest) {
+        return reserveRepository.insertReserve(reserveRequest);
     }
 
     @Override
