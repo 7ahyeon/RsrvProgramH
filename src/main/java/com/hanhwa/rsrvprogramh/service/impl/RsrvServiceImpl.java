@@ -6,7 +6,9 @@ import com.hanhwa.rsrvprogramh.config.exception.CloseException;
 import com.hanhwa.rsrvprogramh.config.exception.FileNotReadException;
 import com.hanhwa.rsrvprogramh.dao.ReserveRepository;
 import com.hanhwa.rsrvprogramh.model.ReserveRequest;
+import com.hanhwa.rsrvprogramh.model.ReserveRequestInfo;
 import com.hanhwa.rsrvprogramh.model.ReserveResponse;
+import com.hanhwa.rsrvprogramh.model.ReserveResponseInfo;
 import com.hanhwa.rsrvprogramh.service.RsrvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 @Service
@@ -72,8 +75,11 @@ public class RsrvServiceImpl implements RsrvService {
         }
     }
     @Override
-    public Long completeResponse(ReserveRequest reserveRequest) {
-        return reserveRepository.insertReserve(reserveRequest);
+    public ReserveResponse completeResponse(ReserveRequest reserveRequest) {
+        String rsrvNo = reserveRepository.insertReserve(reserveRequest);
+        ReserveResponse response = reserveRepository.selectReserve(rsrvNo);
+        return response;
+
     }
 
     @Override

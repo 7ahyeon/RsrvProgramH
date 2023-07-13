@@ -13,12 +13,18 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class ReserveRequestInfo { // 한화 리조트로의 예약 요청 정보
-    // 고객 식별 번호
-    @SerializedName("CUST_IDNT_NO")
-    private String custIdntNo;
+    // 예약 번호
+    @SerializedName("RSRV_NO")
+    private String rsrvNo;
     // 객장 코드
     @SerializedName("LOC_CD")
     private String locCd;
+    // 예약 날짜(도착 일자)
+    @SerializedName("ARRV_DATE")
+    private LocalDate arrvDate;
+    // 박수
+    @SerializedName("OVNT_CNT")
+    private String ovntCnt;
     // 객실 타입 코드
     @SerializedName("ROOM_TYPE_CD")
     private String roomTypeCd;
@@ -31,18 +37,10 @@ public class ReserveRequestInfo { // 한화 리조트로의 예약 요청 정보
     // 회원 번호
     @SerializedName("MEMB_NO")
     private String membNo;
-    // 예약 번호
-    @SerializedName("RSRV_NO")
-    private String rsrvNo;
-    // 예약 날짜(도착 일자)
-    @SerializedName("ARRV_DATE")
-    private LocalDate arrvDate;
     // 예약 객실 수
     @SerializedName("RSRV_ROOM_CNT")
     private String rsrvRoomCnt;
-    // 박수
-    @SerializedName("OVNT_CNT")
-    private String ovntCnt;
+    private transient String roomRate;
     // 계약 번호
     @SerializedName("CONT_NO")
     private String contNo;
@@ -76,8 +74,6 @@ public class ReserveRequestInfo { // 한화 리조트로의 예약 요청 정보
     // 예약자 전화번호 4
     @SerializedName("RSRV_CUST_TEL_NO4")
     private String custPhoneNo4;
-    // 리프레쉬 여부
-    @SerializedName("REFRESH_YN")
-    private String refreshYn;
     private transient LocalDate rsrvCmplDate;
+
 }
