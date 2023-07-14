@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 // @RestController : JSON 형태로 객체 데이터를 반환하는 것이 주 목적
 // @Controller + @ResponseBody
@@ -25,6 +23,8 @@ public class RestTemplateController {
         HttpEntity<JsonObject> response = connectionService.httpConnection(request);
         System.out.println("요청");
         System.out.println(request.toString());
+        System.out.println("응답");
+        System.out.println(response.toString());
         return response;
     }
 }

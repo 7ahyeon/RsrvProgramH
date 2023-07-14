@@ -31,62 +31,21 @@ public class RsrvServiceImpl implements RsrvService {
         this.gson = gson;
         this.reserveRepository = reserveRepository;
     }
+
     @Override
-    public String getResponseFile() { // 예약 신청 응답 JSON 파일 읽기
-        String fileName = "RsrvReqRs.json";
-        URL resource = getClass().getClassLoader().getResource("static/file/" + fileName);
-        String jsonFilePath = resource.getFile();
-
-        FileReader fr = null;
-        BufferedReader br = null;
-
-        try {
-            fr = new FileReader(jsonFilePath);
-            br = new BufferedReader(fr);
-
-            String jsonFileContentLine;
-            // StringBuilder : 동기화 비지원 (싱글 스레드 환경 적합)
-            // StringBuffer : 동기화 지원 (멀티 스레드 환경 적합)
-            StringBuffer sb = new StringBuffer();
-
-            while((jsonFileContentLine = br.readLine()) != null){ // 빈 문자열이 없도록 주의(NPE)
-                sb.append(jsonFileContentLine);
-            }
-            return sb.toString();
-            // 체크 예외
-        } catch (IOException e) {
-            // 파일을 읽지 못했을 때
-            throw new FileNotReadException(e);
-        } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    throw new CloseException("FileReader is not closed.", e);
-                }
-            }
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    throw new CloseException("BufferedReader is not closed.", e);
-                }
-            }
-        }
-    }
-    @Override
-    public ReserveResponse completeResponse(ReserveRequest reserveRequest) {
-        String rsrvNo = reserveRepository.insertReserve(reserveRequest);
-        ReserveResponse response = reserveRepository.selectReserve(rsrvNo);
+    public ReserveResponse completeReserve(ReserveRequest reserveRequest) {
+        int rsrvNo = reserveRepository.insertReserve(reserveRequest);
+        System.out.println("번호" + rsrvNo);
+        ReserveResponse response = reserveRepository.selectReserve(reserveRequest);
+        System.out.println("응답");
+        System.out.println(response.toString());
         return response;
-
     }
 
     @Override
     public Object bindingObject(String jsonFileContent) { // JSON 전문 Object 바인딩
         if (jsonFileContent.contains("ds_rsrvInfo")) {
             // 요청
-            System.out.println("call");
             ReserveRequest reserveRequest = gson.fromJson(jsonFileContent, ReserveRequest.class);
             return reserveRequest;
         } else if (jsonFileContent.contains("ds_prcsResult")) {

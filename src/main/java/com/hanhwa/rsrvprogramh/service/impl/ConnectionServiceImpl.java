@@ -38,12 +38,8 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
     @Override
     public JsonObject createResponse(ReserveRequest reserveRequest) {
-        // 예약 신청 저장
-        ReserveResponse response = rsrvService.completeResponse(reserveRequest);
-       /* // 응답 파일 읽기
-        String jsonFileContent = rsrvService.getResponseFile();
-        // 응답 Json 전문 Object 바인딩
-        ReserveResponse rsrvRequest = (ReserveResponse) rsrvService.bindingObject(jsonFileContent);*/
+        // 예약 신청 요청 저장 및 응답 조회
+        ReserveResponse response = rsrvService.completeReserve(reserveRequest);
         // 응답 Json 전문 생성
         JsonObject responseJson = rsrvService.parsingJson(response);
 
