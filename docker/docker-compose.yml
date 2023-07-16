@@ -17,6 +17,6 @@ services:
       # data : mysql data가 생성되는 디렉토리 링크
       - ./db/mysql/data:/var/lib/mysql
       # config : mysql configuration 정보
-      - ./db/mysql/config:/etc/mysql/conf.d
+      - ./db/mysql/config/my.cnf:/etc/mysql/my.cnf
       # init : sql 파일을 넣고 initial data를 생성할 때 사용함(container 생성시 알파벳 순서대로 실행)
       - ./db/mysql/init:/docker-entrypoint-initdb.d
