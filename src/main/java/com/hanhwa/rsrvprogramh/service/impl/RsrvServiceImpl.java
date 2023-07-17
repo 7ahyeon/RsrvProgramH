@@ -35,9 +35,8 @@ public class RsrvServiceImpl implements RsrvService {
     @Override
     public ReserveResponse completeReserve(ReserveRequest reserveRequest) {
         int rsrvNo = reserveRepository.insertReserve(reserveRequest);
-        System.out.println("번호" + rsrvNo);
         ReserveResponse response = reserveRepository.selectReserve(reserveRequest);
-        System.out.println("응답");
+        System.out.println("한화 예약 완료 정보 DB 확인");
         System.out.println(response.toString());
         return response;
     }

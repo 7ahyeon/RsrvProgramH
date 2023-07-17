@@ -21,10 +21,6 @@ public class RestTemplateController {
     @PostMapping("/rsrvResponse")
     public HttpEntity<JsonObject> rsrvResponse(@RequestBody JsonObject request) {
         HttpEntity<JsonObject> response = connectionService.httpConnection(request);
-        System.out.println("요청");
-        System.out.println(request.toString());
-        System.out.println("응답");
-        System.out.println(response.toString());
         return response;
     }
 }

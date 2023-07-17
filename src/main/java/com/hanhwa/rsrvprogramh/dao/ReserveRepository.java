@@ -51,8 +51,6 @@ public class ReserveRepository {
 
     public ReserveResponse selectReserve(ReserveRequest reserveRequest) {
         ReserveRequestInfo requestInfo = reserveRequest.getReserveRequestInfoList().get(0);
-        System.out.println("값확인");
-        System.out.println(requestInfo.toString());
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("locCd", requestInfo.getLocCd())
@@ -64,8 +62,7 @@ public class ReserveRepository {
         ReserveResponse response = new ReserveResponse();
         response.setReserveResponseInfoList(new ArrayList<>());
         response.getReserveResponseInfoList().add(responseInfo);
-        System.out.println("응답 생성");
-        System.out.println(response.toString());
+
         return response;
     }
 
